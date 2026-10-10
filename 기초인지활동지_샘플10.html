@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>기초인지·한글 활동지 샘플</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<style>
+/* Layout: A4 활동지를 세로로 쌓은 묶음. 종이는 인쇄 기준이라 항상 흰색, 바깥 책상만 테마를 따른다. */
+:root {
+  --desk: #e4e9f0;
+  --desk-fg: #34404f;
+  --paper: #ffffff;
+  --ink: #1d2733;
+  --muted: #5b6878;
+  --accent: #2a62a8;
+  --accent-soft: #e6eef8;
+  --warm: #e07a35;
+  --line: #b8c3d1;
+  --lv1: #3f9a5c;
+  --lv2: #e08a2c;
+  --lv3: #d0473f;
+  --display: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --body: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --desk: #171d25; --desk-fg: #cdd6e1; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --desk: #171d25; --desk-fg: #cdd6e1; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--desk); color: var(--desk-fg); font-family: var(--body); }
+.wrap { padding-inline: 16px; padding-block: 28px 56px; display: grid; gap: 28px; justify-items: center; }
+
+.intro { max-width: 794px; width: 100%; font-size: 15px; line-height: 1.65; display: grid; gap: 6px; }
+.intro h1 { font-family: var(--display); font-weight: 400; font-size: 28px; margin: 0; text-wrap: balance; }
+.intro p { margin: 0; }
+.intro ul { margin: 0; padding-left: 1.2em; }
+
+/* 종이 */
+.sheet {
+  background: var(--paper); color: var(--ink);
+  width: 100%; max-width: 794px; min-width: 0;
+  padding: 36px 40px 28px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.12);
+  display: flex; flex-direction: column; gap: 18px;
+}
+@media (min-width: 840px) { .sheet { min-height: 1123px; } }
+
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 10px;
+  border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+.tagline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tag { font-family: var(--display); font-size: 18px; color: var(--accent); letter-spacing: .03em; }
+.lv { font-family: var(--display); font-size: 15px; color: #fff; padding: 2px 12px 1px; border-radius: 20px; letter-spacing: .05em; }
+.lv1 { background: var(--lv1); } .lv2 { background: var(--lv2); } .lv3 { background: var(--lv3); }
+.who { display: flex; gap: 18px; font-size: 17px; flex-wrap: wrap; }
+.who span { white-space: nowrap; }
+.who i { display: inline-block; width: 96px; border-bottom: 1.5px solid var(--ink); margin-left: 6px; }
+
+h2 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 0; line-height: 1.2; text-wrap: balance; }
+
+.part { display: grid; gap: 10px; }
+.ph { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 21px; line-height: 1.45; }
+.step { font-family: var(--display); font-size: 15px; color: var(--accent); background: var(--accent-soft);
+  border-radius: 6px; padding: 2px 10px 1px; white-space: nowrap; }
+
+.em { font-family: var(--emoji); line-height: 1; }
+.blank { display: inline-block; min-width: 90px; border-bottom: 2px solid var(--ink); height: 1.2em; vertical-align: baseline; }
+.blank.s { min-width: 54px; }
+.box { display: inline-block; width: 52px; height: 44px; border: 2px solid var(--ink); border-radius: 6px; }
+
+/* 그림 격자 */
+.grid { display: grid; gap: 8px; }
+.g5 { grid-template-columns: repeat(5, minmax(0,1fr)); }
+.g4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.g6 { grid-template-columns: repeat(6, minmax(0,1fr)); }
+.g3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.cell { border: 1.5px solid var(--line); border-radius: 10px; min-height: 64px; display: grid; place-items: center;
+  padding: 6px 4px; text-align: center; gap: 2px; }
+.cell .em { font-size: 40px; }
+.cell .w { font-size: 20px; }
+.cell.word { font-size: 24px; min-height: 52px; }
+.cell .n { font-family: var(--display); font-size: 13px; color: var(--muted); }
+.cell .ans { width: 40px; height: 34px; border: 2px solid var(--ink); border-radius: 6px; margin-top: 4px; }
+
+/* 한 줄 고르기 */
+.rows { display: grid; gap: 10px; }
+.pick { display: grid; grid-template-columns: 72px 22px repeat(5, minmax(0,1fr)); align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.pick.p3 { grid-template-columns: 72px 22px repeat(3, minmax(0,1fr)); }
+.pick .t { background: var(--accent-soft); border-radius: 10px; display: grid; place-items: center; min-height: 58px; font-size: 32px; }
+.pick .t .em { font-size: 40px; }
+.pick .arrow { color: var(--muted); font-size: 20px; text-align: center; }
+.pick .o { display: grid; place-items: center; font-size: 30px; min-height: 52px; }
+.pick .o .em { font-size: 36px; }
+.oddrow { display: grid; grid-template-columns: 34px repeat(5, minmax(0,1fr)); align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.oddrow .o { text-align: center; font-size: 40px; }
+.num { font-family: var(--display); color: var(--accent); font-size: 20px; }
+
+/* 선 잇기 */
+.match { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22%; font-size: 28px; }
+.match ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.match li { display: flex; align-items: center; gap: 14px; min-height: 52px; }
+.match .l li { justify-content: space-between; }
+.match .l .em { font-size: 44px; }
+.dot { width: 16px; height: 16px; border-radius: 50%; background: var(--ink); flex: none; }
+
+.bank { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; border: 2px solid var(--accent); border-radius: 10px;
+  padding: 10px 16px; font-size: 24px; }
+.bank strong { font-family: var(--display); font-weight: 400; color: var(--accent); }
+
+.fill { display: flex; flex-wrap: wrap; gap: 14px 28px; font-size: 28px; align-items: center; }
+.fill > span { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.fill .em { font-size: 40px; }
+
+.cut { border-top: 2.5px dashed var(--muted); position: relative; margin-block: 6px; }
+.cut span { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--paper); padding: 0 10px;
+  font-size: 15px; color: var(--muted); white-space: nowrap; }
+
+.teacher { border: 1.5px dashed var(--muted); border-radius: 8px; padding: 10px 14px; font-size: 15px; line-height: 1.6; color: var(--muted); }
+.teacher b { font-family: var(--display); font-weight: 400; color: var(--ink); }
+
+/* 낱자 카드 */
+.tiles { display: flex; gap: 8px; }
+.tiles span { width: 46px; height: 46px; border: 2px solid var(--line); border-radius: 8px; display: grid; place-items: center;
+  font-family: var(--display); font-size: 26px; }
+.unscr { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px 24px; }
+.unscr > div { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.unscr .em { font-size: 40px; }
+
+.seq { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.seq span { min-width: 52px; height: 52px; border: 2px solid var(--line); border-radius: 8px; display: grid; place-items: center;
+  font-family: var(--display); font-size: 26px; padding: 0 6px; }
+.seq span.e { border: 2.5px dashed var(--accent); background: var(--accent-soft); }
+
+/* 위치 */
+.board { display: grid; grid-template-columns: repeat(3, 1fr); width: min(100%, 330px); border: 2.5px solid var(--ink); }
+.board div { aspect-ratio: 1; border: 1px solid var(--line); display: grid; place-items: center; text-align: center; gap: 0; padding: 4px; }
+.board .em { font-size: 44px; }
+.board .w { font-size: 17px; }
+.board.empty div { min-height: 80px; }
+.spatial { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 22px; align-items: start; }
+.qlist { margin: 0; padding-left: 1.3em; display: grid; gap: 12px; font-size: 22px; line-height: 1.4; }
+
+.qlist2 { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; font-size: 21px; line-height: 1.4; }
+
+/* 문장-그림 */
+.sent { display: grid; grid-template-columns: minmax(0,1.25fr) repeat(3, minmax(0,1fr)); gap: 8px; align-items: center;
+  border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.sent .s { font-size: 21px; line-height: 1.4; }
+.sent .o { border: 1.5px solid var(--line); border-radius: 10px; min-height: 58px; display: grid; place-items: center; font-size: 28px; position: relative; padding: 4px; }
+.sent .o i { position: absolute; top: 2px; left: 6px; font-style: normal; font-family: var(--display); font-size: 13px; color: var(--muted); }
+
+.trail { width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto; border: 1.5px solid var(--line); border-radius: 10px; }
+
+.foot { margin-top: auto; display: flex; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 8px; }
+.cheer { font-family: var(--display); color: var(--warm); font-size: 17px; }
+
+/* 정답지 */
+.akey { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 22px; font-size: 15px; line-height: 1.55; }
+.akey > div { border-bottom: 1px solid var(--line); padding-bottom: 8px; min-width: 0; }
+.akey h3 { font-family: var(--display); font-weight: 400; font-size: 17px; color: var(--accent); margin: 0 0 2px; }
+.akey p { margin: 0; }
+.akey .pat { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 600px) {
+  .sheet { padding: 22px 14px; gap: 14px; }
+  h2 { font-size: 26px; }
+  .ph { font-size: 17px; }
+  .cell .em { font-size: 28px; } .cell .w, .cell.word { font-size: 15px; }
+  .g6 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .pick, .pick.p3 { grid-template-columns: 48px 12px repeat(5, minmax(0,1fr)); gap: 4px; }
+  .pick.p3 { grid-template-columns: 48px 12px repeat(3, minmax(0,1fr)); }
+  .pick .o, .pick .t { font-size: 20px; } .pick .o .em, .pick .t .em { font-size: 26px; }
+  .oddrow .o { font-size: 26px; }
+  .match { font-size: 19px; gap: 0 10%; } .match .l .em { font-size: 30px; }
+  .spatial { grid-template-columns: 1fr; }
+  .qlist, .qlist2 { font-size: 17px; }
+  .unscr { grid-template-columns: 1fr; }
+  .sent { grid-template-columns: 1fr repeat(3, minmax(0,1fr)); } .sent .s { grid-column: 1 / -1; font-size: 17px; }
+  .sent .o { font-size: 20px; }
+  .akey { grid-template-columns: 1fr; }
+  .fill, .bank { font-size: 19px; }
+}
+
+@media print {
+  @page { size: A4; margin: 0; }
+  body { background: #fff; }
+  .wrap { padding: 0; gap: 0; }
+  .intro { display: none; }
+  .sheet { box-shadow: none; max-width: none; width: 210mm; min-height: 297mm; padding: 13mm 14mm 10mm; break-after: page; }
+  .lv, .step, .pick .t, .seq span.e, .bank { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <h1>기초인지·한글 활동지 샘플 (10쪽 + 정답지)</h1>
+    <p>영역별로 한 쪽씩, 단계 <b>하·중·상</b>을 섞은 샘플입니다. 쪽마다 <b>그림으로 → 글자로 → 그림과 글자로</b> 순서로 나아갑니다.</p>
+    <ul>
+      <li>보기의 정답 위치는 순서대로, 거꾸로, 무작위가 섞이도록 하나씩 정했습니다.</li>
+      <li>2쪽(청각적 주의력)의 선생님 대본은 아동에게 보이지 않게 접거나 가려 주세요.</li>
+      <li>브라우저 인쇄(⌘P)로 출력하면 A4 한 장씩 나뉩니다.</li>
+    </ul>
+  </header>
+
+  <!-- 1. 시각적 주의력 (하) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">시각적 주의력</span><span class="lv lv1">단계 하</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>사과를 찾아요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림으로</span><span><span class="em">🍎</span> 사과 그림을 모두 찾아 ○표를 하세요.</span></div>
+      <div class="grid g5">
+        <div class="cell"><span class="em">🍅</span></div><div class="cell"><span class="em">🍎</span></div><div class="cell"><span class="em">🍒</span></div><div class="cell"><span class="em">🍑</span></div><div class="cell"><span class="em">🍓</span></div>
+        <div class="cell"><span class="em">🍎</span></div><div class="cell"><span class="em">🍅</span></div><div class="cell"><span class="em">🍓</span></div><div class="cell"><span class="em">🍒</span></div><div class="cell"><span class="em">🍅</span></div>
+        <div class="cell"><span class="em">🍑</span></div><div class="cell"><span class="em">🍒</span></div><div class="cell"><span class="em">🍅</span></div><div class="cell"><span class="em">🍎</span></div><div class="cell"><span class="em">🍓</span></div>
+        <div class="cell"><span class="em">🍓</span></div><div class="cell"><span class="em">🍑</span></div><div class="cell"><span class="em">🍎</span></div><div class="cell"><span class="em">🍅</span></div><div class="cell"><span class="em">🍒</span></div>
+      </div>
+      <div class="ph">사과는 모두 몇 개인가요? <span class="blank s"></span> 개</div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 글자로</span><span>‘사과’라는 글자를 모두 찾아 ○표를 하세요.</span></div>
+      <div class="grid g5">
+        <div class="cell word">사자</div><div class="cell word">사과</div><div class="cell word">과자</div><div class="cell word">사과</div><div class="cell word">사다리</div>
+        <div class="cell word">과일</div><div class="cell word">사과</div><div class="cell word">사자</div><div class="cell word">자두</div><div class="cell word">과자</div>
+        <div class="cell word">사다리</div><div class="cell word">과자</div><div class="cell word">사과</div><div class="cell word">과일</div><div class="cell word">사자</div>
+        <div class="cell word">사과</div><div class="cell word">자두</div><div class="cell word">과일</div><div class="cell word">사다리</div><div class="cell word">사과</div>
+      </div>
+      <div class="ph">‘사과’는 모두 몇 개인가요? <span class="blank s"></span> 개</div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">③ 그림과 글자로</span><span>그림과 글자가 맞으면 ○, 틀리면 ×를 쓰세요.</span></div>
+      <div class="grid g6">
+        <div class="cell"><span class="em">🍅</span><span class="w">사과</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍎</span><span class="w">사과</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍑</span><span class="w">복숭아</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍒</span><span class="w">딸기</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍎</span><span class="w">토마토</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍓</span><span class="w">딸기</span><span class="ans"></span></div>
+      </div>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 1 / 10</span><span class="cheer">눈으로 꼼꼼히 찾았어요!</span></div>
+  </section>
+
+  <!-- 2. 청각적 주의력 (하) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">청각적 주의력</span><span class="lv lv1">단계 하</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>잘 듣고 표시해요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림과 글자로</span><span>선생님이 말하는 낱말을 잘 들어요. 들은 차례대로 네모 칸에 1, 2, 3, 4, 5를 쓰세요.</span></div>
+      <div class="grid g4">
+        <div class="cell"><span class="em">🦋</span><span class="w">나비</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🐻</span><span class="w">곰</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🚗</span><span class="w">자동차</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🌙</span><span class="w">달</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍌</span><span class="w">바나나</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🐟</span><span class="w">물고기</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">☂️</span><span class="w">우산</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🏠</span><span class="w">집</span><span class="ans"></span></div>
+      </div>
+      <div class="ph">말하지 않은 그림은 빈칸으로 두어요.</div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 소리로</span><span>선생님이 낱말을 하나씩 읽어 줘요. <b>‘바’</b>로 시작하는 낱말이면 그 번호 칸에 ○를 쓰세요.</span></div>
+      <div class="grid g4">
+        <div class="cell"><span class="n">1</span><span class="ans"></span></div>
+        <div class="cell"><span class="n">2</span><span class="ans"></span></div>
+        <div class="cell"><span class="n">3</span><span class="ans"></span></div>
+        <div class="cell"><span class="n">4</span><span class="ans"></span></div>
+        <div class="cell"><span class="n">5</span><span class="ans"></span></div>
+        <div class="cell"><span class="n">6</span><span class="ans"></span></div>
+        <div class="cell"><span class="n">7</span><span class="ans"></span></div>
+        <div class="cell"><span class="n">8</span><span class="ans"></span></div>
+      </div>
+    </div>
+
+    <div class="cut"><span>✂ 선생님용 · 아동에게 보이지 않게 접어 주세요</span></div>
+    <div class="teacher">
+      <p><b>① 읽기 대본</b> (2초 간격, 한 번만 읽습니다)<br>달 → 곰 → 우산 → 나비 → 바나나</p>
+      <p><b>② 읽기 대본</b> (번호를 먼저 말하고 낱말을 읽습니다)<br>1 고양이 · 2 바다 · 3 바람 · 4 기차 · 5 나무 · 6 비 · 7 바위 · 8 사탕</p>
+      <p>‘비’는 ‘ㅂ’으로 시작하지만 ‘바’가 아닙니다. 소리를 끝까지 듣는지 살펴봅니다.</p>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 2 / 10</span><span class="cheer">귀를 쫑긋 세웠어요!</span></div>
+  </section>
+
+  <!-- 3. 시각적 변별 (중) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">시각적 변별</span><span class="lv lv2">단계 중</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>같은 것, 다른 것</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림으로</span><span>줄마다 <b>하나만 다른</b> 그림을 찾아 ○표를 하세요.</span></div>
+      <div class="rows">
+        <div class="oddrow"><span class="num">1</span><span class="o em">🐟</span><span class="o em">🐟</span><span class="o em">🐟</span><span class="o em">🐠</span><span class="o em">🐟</span></div>
+        <div class="oddrow"><span class="num">2</span><span class="o em">🌸</span><span class="o em">🌼</span><span class="o em">🌼</span><span class="o em">🌼</span><span class="o em">🌼</span></div>
+        <div class="oddrow"><span class="num">3</span><span class="o em">🚗</span><span class="o em">🚗</span><span class="o em">🚗</span><span class="o em">🚗</span><span class="o em">🚕</span></div>
+        <div class="oddrow"><span class="num">4</span><span class="o em">🍋</span><span class="o em">🍊</span><span class="o em">🍋</span><span class="o em">🍋</span><span class="o em">🍋</span></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 글자로</span><span>왼쪽 글자와 <b>똑같은</b> 글자를 찾아 ○표를 하세요.</span></div>
+      <div class="rows">
+        <div class="pick"><span class="t">바</span><span class="arrow">→</span><span class="o">파</span><span class="o">바</span><span class="o">빠</span><span class="o">마</span><span class="o">나</span></div>
+        <div class="pick"><span class="t">고</span><span class="arrow">→</span><span class="o">구</span><span class="o">거</span><span class="o">교</span><span class="o">고</span><span class="o">코</span></div>
+        <div class="pick"><span class="t">다</span><span class="arrow">→</span><span class="o">다</span><span class="o">타</span><span class="o">따</span><span class="o">라</span><span class="o">가</span></div>
+        <div class="pick"><span class="t">무</span><span class="arrow">→</span><span class="o">모</span><span class="o">므</span><span class="o">머</span><span class="o">뭐</span><span class="o">무</span></div>
+        <div class="pick"><span class="t">서</span><span class="arrow">→</span><span class="o">저</span><span class="o">시</span><span class="o">서</span><span class="o">사</span><span class="o">처</span></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">③ 그림과 글자로</span><span>그림에 맞는 낱말을 찾아 ○표를 하세요.</span></div>
+      <div class="rows">
+        <div class="pick p3"><span class="t"><span class="em">🐻</span></span><span class="arrow">→</span><span class="o">공</span><span class="o">곰</span><span class="o">곳</span></div>
+        <div class="pick p3"><span class="t"><span class="em">⚽</span></span><span class="arrow">→</span><span class="o">곰</span><span class="o">콩</span><span class="o">공</span></div>
+        <div class="pick p3"><span class="t"><span class="em">🐶</span></span><span class="arrow">→</span><span class="o">개</span><span class="o">게</span><span class="o">계</span></div>
+        <div class="pick p3"><span class="t"><span class="em">🦀</span></span><span class="arrow">→</span><span class="o">개</span><span class="o">계</span><span class="o">게</span></div>
+        <div class="pick p3"><span class="t"><span class="em">🌙</span></span><span class="arrow">→</span><span class="o">달</span><span class="o">닭</span><span class="o">딸</span></div>
+      </div>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 3 / 10</span><span class="cheer">작은 차이도 찾아냈어요!</span></div>
+  </section>
+
+  <!-- 4. 그림-글자 연결 (하) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">그림·글자 연결</span><span class="lv lv1">단계 하</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>그림과 이름을 이어요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림과 글자로</span><span>그림과 이름이 같은 것끼리 점과 점을 선으로 이으세요.</span></div>
+      <div class="match">
+        <ul class="l">
+          <li><span class="em">🐘</span><span class="dot"></span></li>
+          <li><span class="em">🍌</span><span class="dot"></span></li>
+          <li><span class="em">✏️</span><span class="dot"></span></li>
+          <li><span class="em">🚌</span><span class="dot"></span></li>
+          <li><span class="em">🌈</span><span class="dot"></span></li>
+          <li><span class="em">🐢</span><span class="dot"></span></li>
+        </ul>
+        <ul class="r">
+          <li><span class="dot"></span>버스</li>
+          <li><span class="dot"></span>거북이</li>
+          <li><span class="dot"></span>코끼리</li>
+          <li><span class="dot"></span>무지개</li>
+          <li><span class="dot"></span>바나나</li>
+          <li><span class="dot"></span>연필</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 글자로</span><span>그림을 보고 빠진 글자를 <b>보기</b>에서 골라 쓰세요.</span></div>
+      <div class="bank"><strong>보기</strong><span>지</span><span>거</span><span>끼</span></div>
+      <div class="fill">
+        <span><span class="em">🐘</span> 코 <span class="box"></span> 리</span>
+        <span><span class="em">🌈</span> 무 <span class="box"></span> 개</span>
+        <span><span class="em">🐢</span> <span class="box"></span> 북 이</span>
+      </div>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 4 / 10</span><span class="cheer">이름을 잘 알고 있어요!</span></div>
+  </section>
+
+  <!-- 5. 시각 기억 (중) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">시각 기억</span><span class="lv lv2">단계 중</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>잘 보고 기억해요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림과 글자로</span><span>아래 그림 6개를 <b>10초</b> 동안 잘 보세요.</span></div>
+      <div class="grid g6">
+        <div class="cell"><span class="em">🐰</span><span class="w">토끼</span></div>
+        <div class="cell"><span class="em">🍉</span><span class="w">수박</span></div>
+        <div class="cell"><span class="em">🎈</span><span class="w">풍선</span></div>
+        <div class="cell"><span class="em">🚲</span><span class="w">자전거</span></div>
+        <div class="cell"><span class="em">🌻</span><span class="w">해바라기</span></div>
+        <div class="cell"><span class="em">🧦</span><span class="w">양말</span></div>
+      </div>
+    </div>
+
+    <div class="cut"><span>✂ 10초가 지나면 선생님이 이 선을 따라 위쪽을 접어 가려 주세요</span></div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 글자로</span><span>방금 본 것의 이름을 모두 찾아 ○표를 하세요. (6개)</span></div>
+      <div class="grid g4">
+        <div class="cell word">풍선</div><div class="cell word">강아지</div><div class="cell word">사과</div><div class="cell word">해바라기</div>
+        <div class="cell word">양말</div><div class="cell word">자동차</div><div class="cell word">장갑</div><div class="cell word">토끼</div>
+        <div class="cell word">곰</div><div class="cell word">장미</div><div class="cell word">수박</div><div class="cell word">자전거</div>
+      </div>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 5 / 10</span><span class="cheer">기억력이 쑥쑥 자라요!</span></div>
+  </section>
+
+  <!-- 6. 순서·계열 (중) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">순서·계열</span><span class="lv lv2">단계 중</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>차례를 맞혀요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림으로</span><span>먼저 일어나는 일부터 네모 칸에 1, 2, 3…을 쓰세요.</span></div>
+      <div class="grid g4">
+        <div class="cell"><span class="em">🐥</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🥚</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🐔</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🐣</span><span class="ans"></span></div>
+      </div>
+      <div class="grid g3">
+        <div class="cell"><span class="em">🌷</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🌱</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🌿</span><span class="ans"></span></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 그림과 글자로</span><span>글자 카드의 차례가 뒤섞였어요. 그림을 보고 바르게 쓰세요.</span></div>
+      <div class="unscr">
+        <div><span class="em">🦋</span><span class="tiles"><span>비</span><span>나</span></span>→<span class="blank"></span></div>
+        <div><span class="em">🐘</span><span class="tiles"><span>리</span><span>코</span><span>끼</span></span>→<span class="blank"></span></div>
+        <div><span class="em">🚲</span><span class="tiles"><span>거</span><span>자</span><span>전</span></span>→<span class="blank"></span></div>
+        <div><span class="em">🐢</span><span class="tiles"><span>이</span><span>북</span><span>거</span></span>→<span class="blank"></span></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">③ 글자로</span><span>앞으로 가기도 하고 거꾸로 가기도 해요. 점선 칸을 채우세요.</span></div>
+      <div class="rows">
+        <div class="seq"><span>가</span><span>나</span><span class="e"></span><span>라</span><span>마</span></div>
+        <div class="seq"><span>5</span><span>4</span><span class="e"></span><span>2</span><span>1</span></div>
+        <div class="seq"><span>하</span><span class="e"></span><span>타</span><span>카</span></div>
+        <div class="seq"><span>월</span><span>화</span><span class="e"></span><span>목</span><span>금</span></div>
+      </div>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 6 / 10</span><span class="cheer">차근차근 생각했어요!</span></div>
+  </section>
+
+  <!-- 7. 공간 지각 (상) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">공간 지각</span><span class="lv lv3">단계 상</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>어디에 있을까요?</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림과 글자로</span><span>그림판을 보고 물음에 알맞은 이름을 쓰세요.</span></div>
+      <div class="spatial">
+        <div class="board">
+          <div><span class="em">🐻</span><span class="w">곰</span></div>
+          <div><span class="em">🍎</span><span class="w">사과</span></div>
+          <div><span class="em">⭐</span><span class="w">별</span></div>
+          <div><span class="em">🚗</span><span class="w">자동차</span></div>
+          <div><span class="em">🏠</span><span class="w">집</span></div>
+          <div><span class="em">🐟</span><span class="w">물고기</span></div>
+          <div><span class="em">🌙</span><span class="w">달</span></div>
+          <div><span class="em">☂️</span><span class="w">우산</span></div>
+          <div><span class="em">🐰</span><span class="w">토끼</span></div>
+        </div>
+        <ol class="qlist">
+          <li>집의 위에 있는 것은? <span class="blank"></span></li>
+          <li>물고기의 아래에 있는 것은? <span class="blank"></span></li>
+          <li>우산의 왼쪽에 있는 것은? <span class="blank"></span></li>
+          <li>자동차의 오른쪽에 있는 것은? <span class="blank"></span></li>
+          <li>별의 아래에 있는 것은? <span class="blank"></span></li>
+          <li>곰의 아래에 있는 것은? <span class="blank"></span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 글자로</span><span>글을 읽고, 빈 그림판에 차례대로 그리세요.</span></div>
+      <div class="spatial">
+        <div class="board empty"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <ol class="qlist">
+          <li>가운데 칸에 동그라미(○)를 그리세요.</li>
+          <li>동그라미의 왼쪽 칸에 세모(△)를 그리세요.</li>
+          <li>맨 아래 줄 오른쪽 칸에 별(☆)을 그리세요.</li>
+          <li>동그라미의 위 칸에 네모(□)를 그리세요.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 7 / 10</span><span class="cheer">위아래, 왼쪽 오른쪽 척척!</span></div>
+  </section>
+
+  <!-- 8. 범주화 (중) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">범주화</span><span class="lv lv2">단계 중</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>같은 무리끼리 모아요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 그림으로</span><span>동물은 ○, 과일은 △, 탈것은 □를 네모 칸에 그리세요.</span></div>
+      <div class="grid g6">
+        <div class="cell"><span class="em">🐸</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🚂</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍇</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🐴</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍐</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🚁</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🐧</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍊</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🚢</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🍑</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🐄</span><span class="ans"></span></div>
+        <div class="cell"><span class="em">🚲</span><span class="ans"></span></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 글자로</span><span>줄마다 <b>어울리지 않는</b> 낱말 하나에 ×표를 하세요.</span></div>
+      <div class="rows">
+        <div class="oddrow" style="grid-template-columns: 34px repeat(4, minmax(0,1fr));"><span class="num">1</span><span class="o" style="font-size:26px">사자</span><span class="o" style="font-size:26px">호랑이</span><span class="o" style="font-size:26px">포도</span><span class="o" style="font-size:26px">기린</span></div>
+        <div class="oddrow" style="grid-template-columns: 34px repeat(4, minmax(0,1fr));"><span class="num">2</span><span class="o" style="font-size:26px">버스</span><span class="o" style="font-size:26px">기차</span><span class="o" style="font-size:26px">비행기</span><span class="o" style="font-size:26px">딸기</span></div>
+        <div class="oddrow" style="grid-template-columns: 34px repeat(4, minmax(0,1fr));"><span class="num">3</span><span class="o" style="font-size:26px">고양이</span><span class="o" style="font-size:26px">수박</span><span class="o" style="font-size:26px">참외</span><span class="o" style="font-size:26px">자두</span></div>
+        <div class="oddrow" style="grid-template-columns: 34px repeat(4, minmax(0,1fr));"><span class="num">4</span><span class="o" style="font-size:26px">연필</span><span class="o" style="font-size:26px">오리</span><span class="o" style="font-size:26px">공책</span><span class="o" style="font-size:26px">지우개</span></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">③ 그림과 글자로</span><span>어떤 무리인지 <b>보기</b>에서 골라 쓰세요. (하나는 쓰지 않아요.)</span></div>
+      <div class="bank"><strong>보기</strong><span>옷</span><span>과일</span><span>탈것</span><span>동물</span></div>
+      <ol class="qlist2">
+        <li><span class="em">🍎</span> 사과 · <span class="em">🍌</span> 바나나 · <span class="em">🍇</span> 포도 → <span class="blank"></span></li>
+        <li><span class="em">🐶</span> 개 · <span class="em">🐱</span> 고양이 · <span class="em">🐰</span> 토끼 → <span class="blank"></span></li>
+        <li><span class="em">👕</span> 티셔츠 · <span class="em">👖</span> 바지 · <span class="em">🧦</span> 양말 → <span class="blank"></span></li>
+      </ol>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 8 / 10</span><span class="cheer">끼리끼리 잘 모았어요!</span></div>
+  </section>
+
+  <!-- 9. 주의 전환 (상) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">주의 전환·처리 속도</span><span class="lv lv3">단계 상</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>숫자와 글자를 번갈아 이어요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 숫자와 글자로</span><span>숫자와 글자를 번갈아 가며 선으로 이으세요.</span></div>
+      <div class="seq">
+        <span>1</span>→<span>가</span>→<span>2</span>→<span>나</span>→<span>3</span>→<span>…</span>
+      </div>
+      <div class="ph">‘시작’에서 출발해 ‘끝’에서 멈춰요. 연필을 떼지 않고 이어 보세요.</div>
+      <svg class="trail" viewBox="0 0 600 440" role="img" aria-label="숫자 1부터 5, 글자 가부터 마가 흩어져 있는 길 잇기 판">
+        <g font-family="Jua, Apple SD Gothic Neo, sans-serif" text-anchor="middle">
+          <g><circle cx="90" cy="70" r="30" fill="#e6eef8" stroke="#1d2733" stroke-width="3"/><text x="90" y="80" font-size="28" fill="#1d2733">1</text><text x="90" y="28" font-size="17" fill="#2a62a8">시작</text></g>
+          <g><circle cx="430" cy="340" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="430" y="350" font-size="28" fill="#1d2733">가</text></g>
+          <g><circle cx="300" cy="95" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="300" y="105" font-size="28" fill="#1d2733">2</text></g>
+          <g><circle cx="110" cy="300" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="110" y="310" font-size="28" fill="#1d2733">나</text></g>
+          <g><circle cx="520" cy="190" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="520" y="200" font-size="28" fill="#1d2733">3</text></g>
+          <g><circle cx="260" cy="230" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="260" y="240" font-size="28" fill="#1d2733">다</text></g>
+          <g><circle cx="70" cy="185" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="70" y="195" font-size="28" fill="#1d2733">4</text></g>
+          <g><circle cx="530" cy="70" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="530" y="80" font-size="28" fill="#1d2733">라</text></g>
+          <g><circle cx="390" cy="215" r="30" fill="#ffffff" stroke="#1d2733" stroke-width="3"/><text x="390" y="225" font-size="28" fill="#1d2733">5</text></g>
+          <g><circle cx="240" cy="380" r="30" fill="#e6eef8" stroke="#1d2733" stroke-width="3"/><text x="240" y="390" font-size="28" fill="#1d2733">마</text><text x="300" y="388" font-size="17" fill="#2a62a8">끝</text></g>
+        </g>
+      </svg>
+      <div class="ph">걸린 시간: <span class="blank s"></span> 분 <span class="blank s"></span> 초</div>
+    </div>
+
+    <div class="teacher">
+      <p><b>선생님 참고</b> · 처음에는 ‘1 → 가 → 2 → 나’까지 함께 이어 보며 규칙을 알려 줍니다. 틀린 곳으로 가면 바로 알려 주고, 직전의 맞는 동그라미에서 다시 시작하게 합니다. 시간과 함께 틀린 횟수도 적어 두면 다음 회차와 비교할 수 있습니다.</p>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 9 / 10</span><span class="cheer">끝까지 집중했어요!</span></div>
+  </section>
+
+  <!-- 10. 그림·글자 통합 이해 (상) -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">그림·글자 통합 이해</span><span class="lv lv3">단계 상</span></div><div class="who"><span>이름<i></i></span><span>날짜<i></i></span></div></div>
+    <h2>읽고 그림을 골라요</h2>
+
+    <div class="part">
+      <div class="ph"><span class="step">① 글자에서 그림으로</span><span>문장을 읽고, 맞는 그림을 찾아 ○표를 하세요.</span></div>
+      <div class="rows">
+        <div class="sent"><span class="s">1. 사과가 두 개 있어요.</span><span class="o em"><i>①</i>🍎</span><span class="o em"><i>②</i>🍎🍎</span><span class="o em"><i>③</i>🍎🍎🍎</span></div>
+        <div class="sent"><span class="s">2. 빨간 하트는 하나, 파란 하트는 둘이에요.</span><span class="o em"><i>①</i>❤️💙💙</span><span class="o em"><i>②</i>❤️❤️💙</span><span class="o em"><i>③</i>💙❤️</span></div>
+        <div class="sent"><span class="s">3. 새가 물고기보다 많아요.</span><span class="o em"><i>①</i>🐦🐟</span><span class="o em"><i>②</i>🐟🐟🐦</span><span class="o em"><i>③</i>🐦🐦🐦🐟</span></div>
+        <div class="sent"><span class="s">4. 자동차는 있고, 자전거는 없어요.</span><span class="o em"><i>①</i>🚗</span><span class="o em"><i>②</i>🚲</span><span class="o em"><i>③</i>🚗🚲</span></div>
+        <div class="sent"><span class="s">5. 초록 공은 둘, 빨간 공은 하나예요.</span><span class="o em"><i>①</i>🟢🔴🔴</span><span class="o em"><i>②</i>🟢🟢</span><span class="o em"><i>③</i>🟢🔴🟢</span></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="step">② 그림에서 글자로</span><span>그림을 보고, 알맞은 낱말을 <b>보기</b>에서 골라 문장을 완성하세요.</span></div>
+      <div class="bank"><strong>보기</strong><span>우유</span><span>당근</span><span>바나나</span></div>
+      <ol class="qlist2">
+        <li><span class="em">🐰🥕</span> 토끼가 <span class="blank"></span>을 먹어요.</li>
+        <li><span class="em">🐒🍌</span> 원숭이가 <span class="blank"></span>를 먹어요.</li>
+        <li><span class="em">🐱🥛</span> 고양이가 <span class="blank"></span>를 마셔요.</li>
+      </ol>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 10 / 10</span><span class="cheer">읽고 생각하고 찾았어요!</span></div>
+  </section>
+
+  <!-- 정답지 -->
+  <section class="sheet">
+    <div class="top"><div class="tagline"><span class="tag">선생님용</span></div></div>
+    <h2>정답지</h2>
+    <div class="akey">
+      <div><h3>1. 시각적 주의력 (하)</h3>
+        <p>① 사과 4개 (1줄 2번째, 2줄 1번째, 3줄 4번째, 4줄 3번째)</p>
+        <p>② ‘사과’ 6개 (1줄 2·4번째, 2줄 2번째, 3줄 3번째, 4줄 1·5번째)</p>
+        <p>③ × ○ ○ × × ○</p></div>
+      <div><h3>2. 청각적 주의력 (하)</h3>
+        <p>① 나비 4 · 곰 2 · 자동차 빈칸 · 달 1 · 바나나 5 · 물고기 빈칸 · 우산 3 · 집 빈칸</p>
+        <p>② 2(바다) · 3(바람) · 7(바위)에 ○</p></div>
+      <div><h3>3. 시각적 변별 (중)</h3>
+        <p>① 4번째 · 1번째 · 5번째 · 2번째</p>
+        <p>② 2번째 · 4번째 · 1번째 · 5번째 · 3번째</p>
+        <p>③ 곰(2) · 공(3) · 개(1) · 게(3) · 달(1)</p></div>
+      <div><h3>4. 그림·글자 연결 (하)</h3>
+        <p>① 코끼리(3) · 바나나(5) · 연필(6) · 버스(1) · 무지개(4) · 거북이(2) <span class="pat">(괄호는 오른쪽에서 몇 번째)</span></p>
+        <p>② 끼 · 지 · 거</p></div>
+      <div><h3>5. 시각 기억 (중)</h3>
+        <p>② 풍선 · 해바라기 · 양말 · 토끼 · 수박 · 자전거 <span class="pat">(1·4·5·8·11·12번째 칸)</span></p></div>
+      <div><h3>6. 순서·계열 (중)</h3>
+        <p>① 🐥3 🥚1 🐔4 🐣2 / 🌷3 🌱1 🌿2</p>
+        <p>② 나비 · 코끼리 · 자전거 · 거북이</p>
+        <p>③ 다 · 3 · 파 · 수</p></div>
+      <div><h3>7. 공간 지각 (상)</h3>
+        <p>① 사과 · 토끼 · 달 · 집 · 물고기 · 자동차</p>
+        <p>② 가운데 ○, 가운데 줄 왼쪽 △, 맨 아래 오른쪽 ☆, 맨 위 가운데 □ <span class="pat">(왼쪽·오른쪽은 아동이 보는 방향)</span></p></div>
+      <div><h3>8. 범주화 (중)</h3>
+        <p>① ○ 개구리·말·펭귄·소 / △ 포도·배(과일)·귤·복숭아 / □ 기차·헬리콥터·배(탈것)·자전거</p>
+        <p>② 포도 · 딸기 · 고양이 · 오리</p>
+        <p>③ 과일 · 동물 · 옷 <span class="pat">(탈것은 쓰지 않음)</span></p></div>
+      <div><h3>9. 주의 전환 (상)</h3>
+        <p>1 → 가 → 2 → 나 → 3 → 다 → 4 → 라 → 5 → 마</p></div>
+      <div><h3>10. 그림·글자 통합 이해 (상)</h3>
+        <p>① ② · ① · ③ · ① · ③</p>
+        <p>② 당근 · 바나나 · 우유</p></div>
+    </div>
+    <div class="foot"><span>기초인지·한글 활동지 · 정답지</span><span></span></div>
+  </section>
+</div>
+
+</html>
